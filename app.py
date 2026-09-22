@@ -90,12 +90,11 @@ if uploaded_file is not None:
 
     processed_image = image.convert("L")
     processed_image = processed_image.resize((28, 28))
-
-    image_array = np.array(
-        processed_image,
-        dtype=np.float32
-    )
-
+    
+    # Invert the image to match the Fashion-MNIST format
+    processed_image = Image.eval(processed_image, lambda pixel: 255 - pixel)
+    
+    image_array = np.array(processed_image, dtype=np.float32)
     image_array = image_array / 255.0
 
     image_array = np.expand_dims(image_array, axis=0)
